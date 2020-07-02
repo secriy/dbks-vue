@@ -20,42 +20,29 @@ export default new Router({
                     meta: { title: '系统首页' }
                 },
                 {
-                    path: '/icon',
-                    component: () => import(/* webpackChunkName: "icon" */ '../components/page/Icon.vue'),
-                    meta: { title: '自定义图标' }
+                    path: '/userTable',
+                    component: () => import(/* webpackChunkName: "userTable" */ '../components/page/UserTable.vue'),
+                    meta: { title: '用户管理', permission: true }
                 },
                 {
-                    path: '/table',
-                    component: () => import(/* webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
-                    meta: { title: '基础表格' }
+                    path: '/newsTable',
+                    component: () => import(/* webpackChunkName: "newsTable" */ '../components/page/NewsTable.vue'),
+                    meta: { title: '新闻管理' }
                 },
                 {
-                    path: '/tabs',
-                    component: () => import(/* webpackChunkName: "tabs" */ '../components/page/Tabs.vue'),
-                    meta: { title: 'tab选项卡' }
+                    path: '/productsTable',
+                    component: () => import(/* webpackChunkName: "productsTable" */ '../components/page/ProductsTable.vue'),
+                    meta: { title: '产品信息管理' }
                 },
                 {
-                    path: '/form',
-                    component: () => import(/* webpackChunkName: "form" */ '../components/page/BaseForm.vue'),
-                    meta: { title: '基本表单' }
+                    path: '/offersTable',
+                    component: () => import(/* webpackChunkName: "offersTable" */ '../components/page/OffersTable.vue'),
+                    meta: { title: '招聘信息管理' }
                 },
                 {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: () => import(/* webpackChunkName: "drag" */ '../components/page/DragList.vue'),
-                    meta: { title: '拖拽列表' }
-                },
-                {
-                    // 拖拽Dialog组件
-                    path: '/dialog',
-                    component: () => import(/* webpackChunkName: "dragdialog" */ '../components/page/DragDialog.vue'),
-                    meta: { title: '拖拽弹框' }
-                },
-                {
-                    // 权限页面
-                    path: '/permission',
-                    component: () => import(/* webpackChunkName: "permission" */ '../components/page/Permission.vue'),
-                    meta: { title: '权限测试', permission: true }
+                    path: '/infoTable',
+                    component: () => import(/* webpackChunkName: "infoTable" */ '../components/page/InfoTable.vue'),
+                    meta: { title: '企业信息管理' }
                 },
                 {
                     path: '/404',
@@ -66,11 +53,6 @@ export default new Router({
                     path: '/403',
                     component: () => import(/* webpackChunkName: "403" */ '../components/page/403.vue'),
                     meta: { title: '403' }
-                },
-                {
-                    path: '/donate',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
                 }
             ]
         },

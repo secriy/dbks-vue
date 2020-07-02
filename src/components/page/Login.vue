@@ -1,7 +1,7 @@
 <template>
     <div class="login-wrap">
         <div class="ms-login">
-            <div class="ms-title">后台管理系统</div>
+            <div class="ms-title">企业网站管理系统</div>
             <el-form :model="param" :rules="rules" ref="login" label-width="0px" class="ms-content">
                 <el-form-item prop="user_name">
                     <el-input v-model="param.user_name" placeholder="user_name">
@@ -44,8 +44,11 @@ export default {
                     API.userLogin(this.param).then(res => {
                         if (res.code === 0) {
                             this.$message.success('登录成功');
+                            localStorage.setItem('username', res.data.user_name);
                             if (res.data.authority === 1) {
                                 localStorage.setItem('auth', 'admin');
+                            } else {
+                                localStorage.setItem('auth', 'user');
                             }
                             this.$router.push('/');
                         } else {
@@ -68,7 +71,8 @@ export default {
     position: relative;
     width: 100%;
     height: 100%;
-    background-image: url(../../assets/img/login-bg.jpg);
+    /* background-image: url(../../assets/img/login-bg.jpg); */
+    background-color: rgb(75, 73, 73);
     background-size: 100%;
 }
 .ms-title {
