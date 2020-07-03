@@ -163,6 +163,8 @@ export default {
                         if (res.code === 0) {
                             this.$message.success('删除成功');
                             this.tableData.splice(index, 1);
+                        } else {
+                            this.$message.error(res.msg);
                         }
                     });
                 })

@@ -57,7 +57,7 @@ export default {
                     title: '用户管理'
                 },
                 {
-                    icon: 'el-icon-lx-people',
+                    icon: 'el-icon-tickets',
                     index: 'newsTable',
                     title: '新闻管理'
                 },

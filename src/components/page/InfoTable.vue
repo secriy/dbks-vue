@@ -123,6 +123,8 @@ export default {
                     API.infoDel(this.infoData[index].option).then(res => {
                         if (res.code === 0) {
                             this.$message.success('删除成功');
+                        } else {
+                            this.$message.error(res.msg);
                         }
                         this.getData();
                     });
