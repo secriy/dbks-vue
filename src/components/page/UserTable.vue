@@ -18,7 +18,7 @@
                 header-cell-class-name="table-header"
                 @selection-change="handleSelectionChange"
             >
-                <el-table-column type="selection" width="55" align="center"></el-table-column>
+                <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
                 <el-table-column prop="uid" label="ID" width="55" align="center"></el-table-column>
                 <el-table-column prop="user_name" label="用户名"></el-table-column>
                 <el-table-column label="密码">
@@ -92,7 +92,10 @@
                     <el-input v-model="createForm.password"></el-input>
                 </el-form-item>
                 <el-form-item label="权限">
-                    <el-input v-model="createForm.authority"></el-input>
+                    <!-- <el-input v-model="createForm.authority"></el-input> -->
+                    <el-select v-model="createForm.authority" placeholder="请选择">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -113,16 +116,22 @@
 import * as API from '@/api/user.js';
 
 export default {
-    name: 'basetable',
     data() {
         return {
             query: {
                 pageIndex: 1,
                 pageSize: 10
             },
+            options: [
+                { value: 1, label: '管理员' },
+                {
+                    value: 2,
+                    label: '普通用户'
+                }
+            ],
+            value: '',
             tableData: [],
             multipleSelection: [],
-            delList: [],
             editVisible: false,
             createVisible: false,
             pageTotal: 0,
@@ -140,7 +149,7 @@ export default {
         getData() {
             API.userList().then(res => {
                 this.tableData = res.data;
-                this.pageTotal = res.data.length || 50;
+                this.pageTotal = res.data !== null ? res.data.length : 0;
             });
         },
         // 处理创建
@@ -182,17 +191,30 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
-        delAllSelection() {
+        // 多选删除
+        async delAllSelection() {
             const length = this.multipleSelection.length;
             if (length !== 0) {
                 let str = '';
-                this.delList = this.delList.concat(this.multipleSelection);
                 for (let i = 0; i < length; i++) {
-                    str += this.multipleSelection[i].name + ' ';
+                    str += this.multipleSelection[i].uid + ' ';
+                    await API.userDel(this.multipleSelection[i].uid).then(res => {
+                        if (res.code === 0) {
+                            if (i === length - 1) {
+                                this.$message.success(`删除了${str}`);
+                            }
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                    });
                 }
-                this.$message.error(`删除了${str}`);
                 this.multipleSelection = [];
+                this.getData();
             }
+        },
+        // 不允许选择第一行
+        selectable(row) {
+            return row.uid !== 1;
         },
         // 编辑操作
         handleEdit(index, row, uid) {

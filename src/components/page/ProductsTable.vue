@@ -106,7 +106,6 @@
 import * as API from '@/api/products.js';
 
 export default {
-    name: 'basetable',
     data() {
         return {
             query: {
@@ -115,7 +114,6 @@ export default {
             },
             tableData: [],
             multipleSelection: [],
-            delList: [],
             editVisible: false,
             createVisible: false,
             pageTotal: 0,
@@ -132,7 +130,7 @@ export default {
         getData() {
             API.productsList().then(res => {
                 this.tableData = res.data;
-                this.pageTotal = res.data.length || 50;
+                this.pageTotal = res.data !== null ? res.data.length : 0;
             });
         },
         // 处理创建
@@ -174,17 +172,25 @@ export default {
         handleSelectionChange(val) {
             this.multipleSelection = val;
         },
-        delAllSelection() {
+        // 多选删除
+        async delAllSelection() {
             const length = this.multipleSelection.length;
             if (length !== 0) {
                 let str = '';
-                this.delList = this.delList.concat(this.multipleSelection);
                 for (let i = 0; i < length; i++) {
-                    str += this.multipleSelection[i].name + ' ';
+                    str += this.multipleSelection[i].id + ' ';
+                    await API.productsDel(this.multipleSelection[i].id).then(res => {
+                        if (res.code === 0) {
+                            if (i === length - 1) {
+                                this.$message.success(`删除了${str}`);
+                            }
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                    });
                 }
-
-                this.$message.error(`删除了${str}`);
                 this.multipleSelection = [];
+                this.getData();
             }
         },
         // 编辑操作
