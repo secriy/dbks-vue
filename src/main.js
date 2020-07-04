@@ -7,6 +7,7 @@ import './assets/css/icon.css';
 import './components/common/directives';
 import 'babel-polyfill';
 import * as API from '@/api/user.js';
+import 'default-passive-events';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI, {
