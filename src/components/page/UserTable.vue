@@ -246,15 +246,28 @@ export default {
             this.$set(this.query, 'pageIndex', val);
             this.getData();
         },
-        timestampToTime(timestamp) {
-            let date = new Date(timestamp * 1000); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
-            let Y = date.getFullYear() + '-';
-            let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-            let D = date.getDate() + ' ';
-            let h = date.getHours() + ':';
-            let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
-            let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-            return Y + M + D + h + m + s;
+        // 时间格式化
+        timestampToTime(time, format = 'YY-MM-DD hh:mm:ss') {
+            var date = new Date(time * 1000);
+            var year = date.getFullYear(),
+                month = date.getMonth() + 1, //月份是从0开始的
+                day = date.getDate(),
+                hour = date.getHours(),
+                min = date.getMinutes(),
+                sec = date.getSeconds();
+            var preArr = Array.apply(null, Array(10)).map(function(elem, index) {
+                return '0' + index;
+            }); //开个长度为10的数组 格式为 ["00", "01", "02", "03", "04", "05", "06", "07", "08", "09"]
+
+            var newTime = format
+                .replace(/YY/g, year)
+                .replace(/MM/g, preArr[month] || month)
+                .replace(/DD/g, preArr[day] || day)
+                .replace(/hh/g, preArr[hour] || hour)
+                .replace(/mm/g, preArr[min] || min)
+                .replace(/ss/g, preArr[sec] || sec);
+
+            return newTime;
         },
         admin(auth) {
             if (auth == 1) {
