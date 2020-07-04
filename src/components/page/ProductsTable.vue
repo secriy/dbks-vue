@@ -11,7 +11,7 @@
                 <el-button type="primary" icon="el-icon-edit" @click="handleCreate()">创建产品信息</el-button>
             </div>
             <el-table
-                :data="tableData"
+                :data="tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)"
                 border
                 class="table"
                 ref="multipleTable"
@@ -34,13 +34,7 @@
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row, scope.row.id)"
                             >编辑</el-button
                         >
-                        <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="handleDelete(scope.$index, scope.row, scope.row.id)"
-                            >删除</el-button
-                        >
+                        <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.row.id)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -51,6 +45,7 @@
                     :current-page="query.pageIndex"
                     :page-size="query.pageSize"
                     :total="pageTotal"
+                    :hide-on-single-page="hideOnSinglePage"
                     @current-change="handlePageChange"
                 ></el-pagination>
             </div>
@@ -120,11 +115,21 @@ export default {
             form: {},
             createForm: {},
             idx: -1,
-            id: -1
+            id: -1,
+            hideOnSinglePage: true
         };
     },
     created() {
         this.getData();
+    },
+    watch: {
+        // 监听分页
+        pageTotal() {
+            if (this.pageTotal == (this.query.pageIndex - 1) * this.query.pageSize && this.pageTotal != 0) {
+                this.query.pageIndex -= 1;
+                this.getData(); //获取列表数据
+            }
+        }
     },
     methods: {
         getData() {
@@ -160,7 +165,7 @@ export default {
                     API.productsDel(id).then(res => {
                         if (res.code === 0) {
                             this.$message.success('删除成功');
-                            this.tableData.splice(index, 1);
+                            this.getData();
                         } else {
                             this.$message.error(res.msg);
                         }
