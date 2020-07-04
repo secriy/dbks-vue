@@ -13,12 +13,12 @@
                         </div>
                     </el-card>
                 </el-col>
-                <el-col :span="8">
+                <el-col :span="8" v-if="auth === 'admin'">
                     <el-card shadow="hover" :body-style="{ padding: '0px' }">
                         <div class="grid-content grid-con-2">
                             <i class="el-icon-lx-people grid-con-icon"></i>
                             <div class="grid-cont-right">
-                                <div class="grid-num">{{ userNum }}</div>
+                                <div class="grid-num">{{ user_num }}</div>
                                 <div>总用户数</div>
                             </div>
                         </div>
@@ -48,15 +48,13 @@ export default {
         username() {
             let username = localStorage.getItem('username');
             return username ? username : this.name;
-        },
-        userNum() {
-            API.userList().then(res => {
-                this.user_num = res.data.length;
-            });
-            return this.user_num;
         }
     },
-
+    activated() {
+        API.userList().then(res => {
+            this.user_num = res.data.length;
+        });
+    },
     methods: {}
 };
 </script>
