@@ -63,11 +63,11 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="标题">
+            <el-form ref="form" :model="form" :rules="rules" label-width="70px">
+                <el-form-item label="标题" prop="title">
                     <el-input v-model="form.title"></el-input>
                 </el-form-item>
-                <el-form-item label="内容">
+                <el-form-item label="内容" prop="content">
                     <el-input v-model="form.content"></el-input>
                 </el-form-item>
             </el-form>
@@ -85,11 +85,11 @@
 
         <!-- 创建弹出框 -->
         <el-dialog title="创建" :visible.sync="createVisible" width="30%">
-            <el-form ref="form" :model="createForm" label-width="70px">
-                <el-form-item label="标题">
+            <el-form ref="form" :model="createForm" :rules="rules" label-width="70px">
+                <el-form-item label="标题" prop="title">
                     <el-input v-model="createForm.title"></el-input>
                 </el-form-item>
-                <el-form-item label="内容">
+                <el-form-item label="内容" prop="content">
                     <el-input v-model="createForm.content"></el-input>
                 </el-form-item>
             </el-form>
@@ -127,7 +127,17 @@ export default {
             createForm: {},
             idx: -1,
             id: -1,
-            hideOnSinglePage: true
+            hideOnSinglePage: true,
+            rules: {
+                title: [
+                    { required: true, message: '请输入标题', trigger: 'blur' },
+                    { min: 1, max: 20, message: '长度在1到20个字符', trigger: 'change' }
+                ],
+                content: [
+                    { required: true, message: '请输入内容', trigger: 'blur' },
+                    { min: 1, max: 20, message: '长度在1到20个字符', trigger: 'change' }
+                ]
+            }
         };
     },
     created() {
@@ -156,18 +166,22 @@ export default {
         },
         // 保存创建
         saveCreate() {
-            this.createVisible = false;
-            API.newsAdd(this.createForm).then(res => {
-                if (res.code === 0) {
-                    this.$message.success(`创建新闻成功`);
-                } else {
-                    this.$message.error(res.msg);
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    this.createVisible = false;
+                    API.newsAdd(this.createForm).then(res => {
+                        if (res.code === 0) {
+                            this.$message.success(`创建新闻成功`);
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                        this.getData();
+                    });
                 }
-                this.getData();
             });
         },
         // 删除操作
-        handleDelete(id) {
+        handleDelete(index, row, id) {
             // 二次确认删除
             this.$confirm('确定要删除吗？', '提示', {
                 type: 'warning'
@@ -219,13 +233,17 @@ export default {
         },
         // 保存编辑
         saveEdit() {
-            this.editVisible = false;
-            API.newsUpdate(this.id, this.form).then(res => {
-                if (res.code === 0) {
-                    this.$message.success(`修改第 ${this.idx + 1} 行成功`);
-                    this.$set(this.tableData, this.idx, this.form);
-                } else {
-                    this.$message.error(res.msg);
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    this.editVisible = false;
+                    API.newsUpdate(this.id, this.form).then(res => {
+                        if (res.code === 0) {
+                            this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+                            this.$set(this.tableData, this.idx, this.form);
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                    });
                 }
             });
         },

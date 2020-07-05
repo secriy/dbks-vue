@@ -29,7 +29,7 @@
                     <template slot-scope="scope">{{ scope.row.password }}</template>
                 </el-table-column>
                 <el-table-column label="权限">
-                    <template slot-scope="scope">{{ admin(scope.row.authority) }}</template>
+                    <template slot-scope="scope">{{ scope.row.authority === 1 ? '管理员' : '普通用户' }}</template>
                 </el-table-column>
                 <el-table-column label="创建时间">
                     <template slot-scope="scope"> {{ timestampToTime(scope.row.created_at) }}</template>
@@ -64,15 +64,17 @@
 
         <!-- 编辑弹出框 -->
         <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="用户名">
+            <el-form ref="form" :model="form" :rules="rules" label-width="70px">
+                <el-form-item label="用户名" prop="user_name">
                     <el-input v-model="form.user_name"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
+                <el-form-item label="密码" prop="password">
                     <el-input v-model="form.password"></el-input>
                 </el-form-item>
-                <el-form-item label="权限">
-                    <el-input v-model="form.authority"></el-input>
+                <el-form-item label="权限" prop="authority">
+                    <el-select v-model="form.authority" placeholder="请选择" :disabled="uid === 1 ? true : false">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
+                    </el-select>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -89,15 +91,14 @@
 
         <!-- 创建弹出框 -->
         <el-dialog title="创建" :visible.sync="createVisible" width="30%">
-            <el-form ref="form" :model="createForm" label-width="70px">
-                <el-form-item label="用户名">
+            <el-form ref="form" :model="createForm" :rules="rules" label-width="70px">
+                <el-form-item label="用户名" prop="user_name">
                     <el-input v-model="createForm.user_name"></el-input>
                 </el-form-item>
-                <el-form-item label="密码">
+                <el-form-item label="密码" prop="password">
                     <el-input v-model="createForm.password"></el-input>
                 </el-form-item>
-                <el-form-item label="权限">
-                    <!-- <el-input v-model="createForm.authority"></el-input> -->
+                <el-form-item label="权限" prop="authority">
                     <el-select v-model="createForm.authority" placeholder="请选择">
                         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
                     </el-select>
@@ -145,7 +146,18 @@ export default {
             idx: -1,
             id: -1,
             uid: null,
-            hideOnSinglePage: true
+            hideOnSinglePage: true,
+            rules: {
+                user_name: [
+                    { required: true, message: '请输入用户名', trigger: 'blur' },
+                    { min: 2, max: 10, message: '长度在2到10个字符', trigger: 'change' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' },
+                    { min: 6, max: 16, message: '长度在6到16个字符', trigger: 'change' }
+                ],
+                authority: [{ required: true, message: '请选择权限', trigger: 'change' }]
+            }
         };
     },
     created() {
@@ -173,19 +185,23 @@ export default {
         },
         // 保存创建
         saveCreate() {
-            this.createVisible = false;
-            this.createForm.authority = parseInt(this.createForm.authority);
-            API.userAdd(this.createForm).then(res => {
-                if (res.code === 0) {
-                    this.$message.success(`创建用户成功`);
-                } else {
-                    this.$message.error(res.msg);
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    this.createVisible = false;
+                    this.createForm.authority = parseInt(this.createForm.authority);
+                    API.userAdd(this.createForm).then(res => {
+                        if (res.code === 0) {
+                            this.$message.success(`创建用户成功`);
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                        this.getData();
+                    });
                 }
-                this.getData();
             });
         },
         // 删除操作
-        handleDelete(id) {
+        handleDelete(index, row, id) {
             // 二次确认删除
             this.$confirm('确定要删除吗？', '提示', {
                 type: 'warning'
@@ -240,14 +256,18 @@ export default {
         },
         // 保存编辑
         saveEdit() {
-            this.editVisible = false;
-            this.form.authority = parseInt(this.form.authority);
-            API.userUpdate(this.uid, this.form).then(res => {
-                if (res.code === 0) {
-                    this.$message.success(`修改第 ${this.idx + 1} 行成功`);
-                    this.$set(this.tableData, this.idx, this.form);
-                } else {
-                    this.$message.error(res.msg);
+            this.$refs.form.validate(valid => {
+                if (valid) {
+                    this.editVisible = false;
+                    this.form.authority = parseInt(this.form.authority);
+                    API.userUpdate(this.uid, this.form).then(res => {
+                        if (res.code === 0) {
+                            this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+                            this.$set(this.tableData, this.idx, this.form);
+                        } else {
+                            this.$message.error(res.msg);
+                        }
+                    });
                 }
             });
         },
@@ -278,13 +298,6 @@ export default {
                 .replace(/ss/g, preArr[sec] || sec);
 
             return newTime;
-        },
-        admin(auth) {
-            if (auth == 1) {
-                return '管理员';
-            } else {
-                return '普通用户';
-            }
         }
     }
 };
