@@ -9,12 +9,15 @@
             <div class="handle-box">
                 <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
                 <el-button type="primary" icon="el-icon-edit" @click="handleCreate()">创建用户</el-button>
+                <el-input v-model="searchData" placeholder="用户名搜索" class="handle-input mr20" clearable></el-input>
             </div>
             <el-table
                 :data="
                     tableData === null
                         ? tableData
-                        : tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)
+                        : tableData
+                              .filter(data => !searchData || data.user_name.toLowerCase().includes(searchData.toLowerCase()))
+                              .slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)
                 "
                 border
                 class="table"
@@ -124,6 +127,7 @@ import * as API from '@/api/user.js';
 export default {
     data() {
         return {
+            searchData: '',
             query: {
                 pageIndex: 1,
                 pageSize: 10
@@ -263,7 +267,6 @@ export default {
                     API.userUpdate(this.uid, this.form).then(res => {
                         if (res.code === 0) {
                             this.$message.success(`修改第 ${this.idx + 1} 行成功`);
-                            this.$set(this.tableData, this.idx, this.form);
                         } else {
                             this.$message.error(res.msg);
                         }
@@ -325,6 +328,9 @@ export default {
 }
 .mr10 {
     margin-right: 10px;
+}
+.mr20 {
+    margin-left: 50px;
 }
 .table-td-thumb {
     display: block;

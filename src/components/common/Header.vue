@@ -67,11 +67,11 @@ export default {
             rules: {
                 old_pass: [
                     { required: true, message: '请输入原密码', trigger: 'blur' },
-                    { min: 6, max: 16, message: '长度在6到16个字符', trigger: 'blur' }
+                    { min: 6, max: 16, message: '长度在6到16个字符', trigger: 'change' }
                 ],
                 password: [
                     { required: true, message: '请输入新密码', trigger: 'blur' },
-                    { min: 6, max: 16, message: '长度在6到16个字符', trigger: 'blur' }
+                    { min: 6, max: 16, message: '长度在6到16个字符', trigger: 'change' }
                 ]
             }
         };
