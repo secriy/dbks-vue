@@ -156,7 +156,6 @@ export default {
         // 保存创建
         saveCreate() {
             this.createVisible = false;
-            this.createForm.authority = parseInt(this.createForm.authority);
             API.offersAdd(this.createForm).then(res => {
                 if (res.code === 0) {
                     this.$message.success(`创建企业招聘成功`);

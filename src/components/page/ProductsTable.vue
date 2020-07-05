@@ -155,7 +155,6 @@ export default {
         // 保存创建
         saveCreate() {
             this.createVisible = false;
-            this.createForm.authority = parseInt(this.createForm.authority);
             API.productsAdd(this.createForm).then(res => {
                 if (res.code === 0) {
                     this.$message.success(`创建产品宣传成功`);
