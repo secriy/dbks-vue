@@ -78,7 +78,7 @@ export default {
     },
     computed: {
         username() {
-            let username = localStorage.getItem('username');
+            let username = sessionStorage.getItem('username');
             return username ? username : this.name;
         }
     },
@@ -90,8 +90,8 @@ export default {
                 API.userLogout().then(res => {
                     if (res.code === 0) {
                         this.$message.success('登出成功');
-                        localStorage.removeItem('username');
-                        localStorage.removeItem('auth');
+                        sessionStorage.removeItem('username');
+                        sessionStorage.removeItem('auth');
                         this.$router.push('/login');
                     } else {
                         this.$message.error(res.msg);

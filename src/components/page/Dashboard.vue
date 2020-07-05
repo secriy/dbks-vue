@@ -37,7 +37,7 @@ export default {
     name: 'dashboard',
     data() {
         return {
-            auth: localStorage.getItem('auth'),
+            auth: sessionStorage.getItem('auth'),
             user_num: null
         };
     },
@@ -46,7 +46,7 @@ export default {
             return this.auth === 'admin' ? '管理员' : '普通用户';
         },
         username() {
-            let username = localStorage.getItem('username');
+            let username = sessionStorage.getItem('username');
             return username ? username : this.name;
         }
     },

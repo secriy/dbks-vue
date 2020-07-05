@@ -44,11 +44,11 @@ export default {
                     API.userLogin(this.param).then(res => {
                         if (res.code === 0) {
                             this.$message.success('登录成功');
-                            localStorage.setItem('username', res.data.user_name);
+                            sessionStorage.setItem('username', res.data.user_name);
                             if (res.data.authority === 1) {
-                                localStorage.setItem('auth', 'admin');
+                                sessionStorage.setItem('auth', 'admin');
                             } else {
-                                localStorage.setItem('auth', 'user');
+                                sessionStorage.setItem('auth', 'user');
                             }
                             this.$router.push('/');
                         } else {

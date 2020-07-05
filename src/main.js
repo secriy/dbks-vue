@@ -17,14 +17,8 @@ Vue.use(ElementUI, {
 //使用钩子函数对路由进行权限跳转
 router.beforeEach((to, from, next) => {
     document.title = `${to.meta.title} | 企业网站管理系统`;
-    const role = localStorage.getItem('auth');
-    // 判断是否登录
-    API.userMe().then(res => {
-        var code = res.code;
-        if (code !== 0) {
-            next('/login');
-        }
-    });
+    const role = sessionStorage.getItem('auth');
+
     // 判断管理员权限
     if (!role && to.path !== '/login') {
         next('/login');
