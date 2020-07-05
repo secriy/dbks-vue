@@ -50,6 +50,11 @@ export default {
             return username ? username : this.name;
         }
     },
+    created() {
+        API.userList().then(res => {
+            this.user_num = res.data.length;
+        });
+    },
     activated() {
         API.userList().then(res => {
             this.user_num = res.data.length;
