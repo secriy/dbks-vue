@@ -11,7 +11,11 @@
                 <el-button type="primary" icon="el-icon-edit" @click="handleCreate()">创建用户</el-button>
             </div>
             <el-table
-                :data="tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)"
+                :data="
+                    tableData === null
+                        ? tableData
+                        : tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)
+                "
                 border
                 class="table"
                 ref="multipleTable"

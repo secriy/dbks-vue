@@ -37,12 +37,12 @@ export default new Router({
                 {
                     path: '/productsTable',
                     component: () => import(/* webpackChunkName: "productsTable" */ '../components/page/ProductsTable.vue'),
-                    meta: { title: '产品信息管理' }
+                    meta: { title: '产品宣传管理' }
                 },
                 {
                     path: '/offersTable',
                     component: () => import(/* webpackChunkName: "offersTable" */ '../components/page/OffersTable.vue'),
-                    meta: { title: '招聘信息管理' }
+                    meta: { title: '企业招聘管理' }
                 },
                 {
                     path: '/infoTable',

@@ -2,16 +2,20 @@
     <div>
         <div class="crumbs">
             <el-breadcrumb separator="/">
-                <el-breadcrumb-item> <i class="el-icon-lx-cascades"></i> 招聘信息管理 </el-breadcrumb-item>
+                <el-breadcrumb-item> <i class="el-icon-lx-cascades"></i> 企业招聘管理 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
                 <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
-                <el-button type="primary" icon="el-icon-edit" @click="handleCreate()">创建招聘信息</el-button>
+                <el-button type="primary" icon="el-icon-edit" @click="handleCreate()">创建企业招聘</el-button>
             </div>
             <el-table
-                :data="tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)"
+                :data="
+                    tableData === null
+                        ? tableData
+                        : tableData.slice((query.pageIndex - 1) * query.pageSize, query.pageIndex * query.pageSize)
+                "
                 border
                 class="table"
                 ref="multipleTable"
@@ -149,7 +153,7 @@ export default {
             this.createForm.authority = parseInt(this.createForm.authority);
             API.offersAdd(this.createForm).then(res => {
                 if (res.code === 0) {
-                    this.$message.success(`创建招聘信息成功`);
+                    this.$message.success(`创建企业招聘成功`);
                 } else {
                     this.$message.error(res.msg);
                 }

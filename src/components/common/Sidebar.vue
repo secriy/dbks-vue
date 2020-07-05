@@ -64,12 +64,12 @@ export default {
                 {
                     icon: 'el-icon-lx-goods',
                     index: 'productsTable',
-                    title: '产品信息管理'
+                    title: '产品宣传管理'
                 },
                 {
                     icon: 'el-icon-lx-friend',
                     index: 'offersTable',
-                    title: '招聘信息管理'
+                    title: '企业招聘管理'
                 },
                 {
                     icon: 'el-icon-lx-addressbook',
