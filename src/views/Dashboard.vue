@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import bus from '../common/bus';
+import bus from '@/components/bus';
 import * as API from '@/api/user.js';
 
 export default {

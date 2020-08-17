@@ -16,7 +16,7 @@
                 </div>
                 <!-- 用户头像 -->
                 <div class="user-avator">
-                    <img src="../../assets/img/avator.png" />
+                    <img src="../assets/img/avator.png" />
                 </div>
                 <!-- 用户名下拉菜单 -->
                 <el-dropdown class="user-name" trigger="click" @command="handleCommand">
@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-import bus from '../common/bus';
+import bus from './bus';
 import * as API from '@/api/user.js';
 
 export default {

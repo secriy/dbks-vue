@@ -20,9 +20,8 @@
 - src：源码
 	- api：封装axios，实现RESTful API
 	- assets：静态资源（css、image）
-	- components：全部组件
-		- common：基础布局组件
-		- page：页面组件
+	- components：基础布局组件
+	- views：页面组件
 	- router：路由
 	- App.vue：入口页面
 	- main.js

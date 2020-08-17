@@ -16,54 +16,54 @@ export default new Router({
         },
         {
             path: '/',
-            component: () => import(/* webpackChunkName: "home" */ '../components/common/Home.vue'),
+            component: () => import(/* webpackChunkName: "home" */ '../components/Home.vue'),
             meta: { title: '自述文件' },
             children: [
                 {
                     path: '/dashboard',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
                     meta: { title: '系统首页' }
                 },
                 {
                     path: '/userTable',
-                    component: () => import(/* webpackChunkName: "userTable" */ '../components/page/UserTable.vue'),
+                    component: () => import(/* webpackChunkName: "userTable" */ '../views/UserTable.vue'),
                     meta: { title: '用户管理', permission: true }
                 },
                 {
                     path: '/newsTable',
-                    component: () => import(/* webpackChunkName: "newsTable" */ '../components/page/NewsTable.vue'),
+                    component: () => import(/* webpackChunkName: "newsTable" */ '../views/NewsTable.vue'),
                     meta: { title: '新闻管理' }
                 },
                 {
                     path: '/productsTable',
-                    component: () => import(/* webpackChunkName: "productsTable" */ '../components/page/ProductsTable.vue'),
+                    component: () => import(/* webpackChunkName: "productsTable" */ '../views/ProductsTable.vue'),
                     meta: { title: '产品宣传管理' }
                 },
                 {
                     path: '/offersTable',
-                    component: () => import(/* webpackChunkName: "offersTable" */ '../components/page/OffersTable.vue'),
+                    component: () => import(/* webpackChunkName: "offersTable" */ '../views/OffersTable.vue'),
                     meta: { title: '企业招聘管理' }
                 },
                 {
                     path: '/infoTable',
-                    component: () => import(/* webpackChunkName: "infoTable" */ '../components/page/InfoTable.vue'),
+                    component: () => import(/* webpackChunkName: "infoTable" */ '../views/InfoTable.vue'),
                     meta: { title: '企业信息管理' }
                 },
                 {
                     path: '/404',
-                    component: () => import(/* webpackChunkName: "404" */ '../components/page/404.vue'),
+                    component: () => import(/* webpackChunkName: "404" */ '../views/404.vue'),
                     meta: { title: '404' }
                 },
                 {
                     path: '/403',
-                    component: () => import(/* webpackChunkName: "403" */ '../components/page/403.vue'),
+                    component: () => import(/* webpackChunkName: "403" */ '../views/403.vue'),
                     meta: { title: '403' }
                 }
             ]
         },
         {
             path: '/login',
-            component: () => import(/* webpackChunkName: "login" */ '../components/page/Login.vue'),
+            component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
             meta: { title: '登录' }
         },
         {
