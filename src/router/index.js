@@ -12,7 +12,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/dashboard'
+            redirect: '/info'
         },
         {
             path: '/',
@@ -60,6 +60,26 @@ export default new Router({
                     meta: { title: '403' }
                 }
             ]
+        },
+        {
+            path: '/info',
+            component: () => import(/* webpackChunkName: "info" */ '../views/show/Info.vue'),
+            meta: { title: '企业信息' }
+        },
+        {
+            path: '/new',
+            component: () => import(/* webpackChunkName: "new" */ '../views/show/New.vue'),
+            meta: { title: '企业新闻' }
+        },
+        {
+            path: '/offer',
+            component: () => import(/* webpackChunkName: "offer" */ '../views/show/Offer.vue'),
+            meta: { title: '招聘信息' }
+        },
+        {
+            path: '/product',
+            component: () => import(/* webpackChunkName: "product" */ '../views/show/Product.vue'),
+            meta: { title: '产品信息' }
         },
         {
             path: '/login',

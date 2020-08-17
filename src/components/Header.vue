@@ -92,7 +92,7 @@ export default {
                         this.$message.success('登出成功');
                         sessionStorage.removeItem('username');
                         sessionStorage.removeItem('auth');
-                        this.$router.push('/login');
+                        this.$router.push('/info');
                     } else {
                         this.$message.error(res.msg);
                     }

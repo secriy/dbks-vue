@@ -50,7 +50,7 @@ export default {
                             } else {
                                 sessionStorage.setItem('auth', 'user');
                             }
-                            this.$router.push('/');
+                            this.$router.push('/dashboard');
                         } else {
                             this.$message.error(res.msg);
                         }
