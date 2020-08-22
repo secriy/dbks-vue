@@ -27,10 +27,10 @@
             >
                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                 <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column label="标题">
+                <el-table-column label="标题" :show-overflow-tooltip="true">
                     <template slot-scope="scope">{{ scope.row.title }}</template>
                 </el-table-column>
-                <el-table-column label="内容">
+                <el-table-column label="内容" :show-overflow-tooltip="true">
                     <template slot-scope="scope">{{ scope.row.content }}</template>
                 </el-table-column>
                 <el-table-column label="创建时间">
@@ -134,12 +134,9 @@ export default {
             rules: {
                 title: [
                     { required: true, message: '请输入标题', trigger: 'blur' },
-                    { min: 1, max: 20, message: '长度在1到20个字符', trigger: 'change' }
+                    { min: 1, max: 64, message: '长度在1到64个字符', trigger: 'change' }
                 ],
-                content: [
-                    { required: true, message: '请输入内容', trigger: 'blur' },
-                    { min: 1, max: 20, message: '长度在1到20个字符', trigger: 'change' }
-                ]
+                content: [{ required: true, message: '请输入内容', trigger: 'blur' }]
             }
         };
     },
@@ -310,5 +307,10 @@ export default {
     margin: auto;
     width: 40px;
     height: 40px;
+}
+</style>
+<style>
+.el-tooltip__popper {
+    width: 50%;
 }
 </style>
