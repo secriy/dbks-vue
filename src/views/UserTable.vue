@@ -28,9 +28,6 @@
                 <el-table-column type="selection" :selectable="selectable" width="55" align="center"></el-table-column>
                 <el-table-column prop="uid" label="ID" width="55" align="center"></el-table-column>
                 <el-table-column prop="user_name" label="用户名"></el-table-column>
-                <el-table-column label="密码">
-                    <template slot-scope="scope">{{ scope.row.password }}</template>
-                </el-table-column>
                 <el-table-column label="权限">
                     <template slot-scope="scope">{{ scope.row.authority === 1 ? '管理员' : '普通用户' }}</template>
                 </el-table-column>
@@ -42,6 +39,7 @@
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row, scope.row.uid)"
                             >编辑</el-button
                         >
+                        <el-button type="text" icon="el-icon-edit" @click="resetPass(scope.row.uid)">重置</el-button>
                         <el-button
                             type="text"
                             icon="el-icon-delete"
@@ -70,9 +68,6 @@
             <el-form ref="form" :model="form" :rules="rules" label-width="70px">
                 <el-form-item label="用户名" prop="user_name">
                     <el-input v-model="form.user_name"></el-input>
-                </el-form-item>
-                <el-form-item label="密码" prop="password">
-                    <el-input v-model="form.password"></el-input>
                 </el-form-item>
                 <el-form-item label="权限" prop="authority">
                     <el-select v-model="form.authority" placeholder="请选择" :disabled="uid === 1 ? true : false">
@@ -278,6 +273,19 @@ export default {
         handlePageChange(val) {
             this.$set(this.query, 'pageIndex', val);
             this.getData();
+        },
+        // 重置密码
+        resetPass(uid) {
+            API.resetPass(uid).then(res => {
+                if (res.code === 0) {
+                    this.$message.success(`UID：${uid}密码重置成功`);
+                    this.$notify({
+                        title: '密码重置',
+                        message: `新密码：${res.data.password}`,
+                        duration: 0
+                    });
+                }
+            });
         },
         // 时间格式化
         timestampToTime(time, format = 'YY-MM-DD hh:mm:ss') {

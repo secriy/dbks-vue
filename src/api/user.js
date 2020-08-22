@@ -22,5 +22,7 @@ const userDel = id => axios.delete(`/api/user/del/${id}`).then(res => res.data);
 const userUpdate = (id, updateForm) => axios.put(`/api/user/update/${id}`, updateForm).then(res => res.data);
 // 修改密码
 const changePass = passForm => axios.put(`/api/user/pass`, passForm).then(res => res.data);
+// 重置密码
+const resetPass = id => axios.post(`/api/user/reset/${id}`).then(res => res.data);
 
-export { userLogin, userMe, userLogout, userList, userDel, userUpdate, userAdd, changePass };
+export { userLogin, userMe, userLogout, userList, userDel, userUpdate, userAdd, changePass, resetPass };
