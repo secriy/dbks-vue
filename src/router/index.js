@@ -74,12 +74,12 @@ export default new Router({
         {
             path: '/offer',
             component: () => import(/* webpackChunkName: "offer" */ '../views/show/Offer.vue'),
-            meta: { title: '招聘信息' }
+            meta: { title: '企业招聘' }
         },
         {
             path: '/product',
             component: () => import(/* webpackChunkName: "product" */ '../views/show/Product.vue'),
-            meta: { title: '产品信息' }
+            meta: { title: '产品宣传' }
         },
         {
             path: '/login',

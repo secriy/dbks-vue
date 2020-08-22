@@ -10,20 +10,12 @@
                     <router-link class="nav-link" to="/new">企业新闻</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/product">产品信息</router-link>
+                    <router-link class="nav-link" to="/product">产品宣传</router-link>
                 </li>
                 <li class="nav-item">
-                    <router-link class="nav-link" to="/offer">招聘信息</router-link>
+                    <router-link class="nav-link" to="/offer">企业招聘</router-link>
                 </li>
             </ul>
-        </div>
-        <div class="input-group col-md-2">
-            <input type="text" class="form-control" placeholder="搜索框" aria-label="search" aria-describedby="button-addon2" />
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" id="button-addon2" style="background-color:#7C686A">
-                    搜索
-                </button>
-            </div>
         </div>
         <div class="btn-group" role="group" aria-label="Example">
             <button class="btn btn-primary" type="button" style="background-color:#FFA0B1;border:none" @click="loginPage">

@@ -4,7 +4,7 @@
         <div class="top-banner">
             <img src="@/assets/images/rl_top.png" class="img-fluid" alt="" />
         </div>
-        <div class="title-line"><span class="tit">资料</span></div>
+        <div class="title-line"><span class="tit">企业信息</span></div>
         <br />
         <div class="container">
             <div class="row justify-content-center">
