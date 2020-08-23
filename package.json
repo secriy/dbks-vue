@@ -14,7 +14,7 @@
         "default-passive-events": "^2.0.0",
         "element-ui": "^2.11.0",
         "jquery": "^3.5.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.20",
         "mavon-editor": "^2.6.17",
         "popper.js": "^1.16.1",
         "vue": "^2.6.10",
